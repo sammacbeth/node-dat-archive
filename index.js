@@ -250,6 +250,24 @@ class DatArchive {
     })
   }
 
+  async copy(filepath, dstpath, opts) {
+    filepath = massageFilepath(filepath)
+    dstpath = massageFilepath(dstpath);
+    return timer(to(opts), async () => {
+      await this._loadPromise
+      await pda.copy(this._archive, filepath, dstpath)
+    })
+  }
+
+  async rename(filepath, dstpath, opts) {
+    filepath = massageFilepath(filepath)
+    dstpath = massageFilepath(dstpath);
+    return timer(to(opts), async () => {
+      await this._loadPromise
+      await pda.rename(this._archive, filepath, dstpath)
+    })
+  }
+
   async download (filepath, opts = {}) {
     filepath = massageFilepath(filepath)
     return timer(to(opts), async (checkin) => {
