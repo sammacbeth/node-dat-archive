@@ -1,6 +1,6 @@
 {
   "name": "node-dat-archive",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A nodejs API for Dat which is compatible with Beaker's DatArchive API",
   "main": "index.js",
   "scripts": {
@@ -24,11 +24,11 @@
   "dependencies": {
     "beaker-error-constants": "^1.2.0",
     "concat-stream": "^1.6.0",
-    "dat-dns": "^2.0.0",
-    "dat-node": "^3.5.3",
+    "dat-dns": "^3.0.1",
+    "dat-node": "^3.5.11",
     "dom-event-target": "^1.0.0",
     "parse-dat-url": "^3.0.1",
-    "pauls-dat-api": "^4.4.0"
+    "pauls-dat-api": "^8.0.1"
   },
   "devDependencies": {
     "ava": "^0.21.0",

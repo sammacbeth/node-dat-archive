@@ -320,7 +320,7 @@ class DatArchive {
   }
 
   createFileActivityStream (pathPattern) {
-    return toEventTarget(pda.createFileActivityStream(this._archive, pathPattern))
+    return toEventTarget(pda.watch(this._archive, pathPattern))
   }
 
   createNetworkActivityStream () {
