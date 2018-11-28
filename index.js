@@ -124,7 +124,16 @@ class DatArchive {
   async configure (settings) {
     await this._loadPromise
     if (!settings || typeof settings !== 'object') throw new Error('Invalid argument')
-    if ('title' in settings || 'description' in settings || 'type' in settings || 'author' in settings) {
+    const knownProps = [
+      'author',
+      'description',
+      'fallback_page',
+      'links',
+      'title',
+      'type',
+      'web_root'
+    ]
+    if (knownProps.filter(prop => prop in settings).length > 0) {
       await pda.updateManifest(this._archive, settings)
     }
     if ('networked' in settings) {
@@ -160,7 +169,8 @@ class DatArchive {
         title: manifest.title,
         description: manifest.description,
         type: manifest.type,
-        author: manifest.author
+        author: manifest.author,
+        links: manifest.links
       }
     })
   }
@@ -319,8 +329,22 @@ class DatArchive {
     })
   }
 
+  watch (pathSpec = null, onInvalidated = null) {
+    // usage: (onInvalidated)
+    if (typeof pathSpec === 'function') {
+      onInvalidated = pathSpec
+      pathSpec = null
+    }
+
+    var evts = toEventTarget(pda.watch(this._archive, pathSpec))
+    if (onInvalidated) {
+      evts.addEventListener('invalidated', onInvalidated)
+    }
+    return evts
+  }
+
   createFileActivityStream (pathPattern) {
-    return toEventTarget(pda.watch(this._archive, pathPattern))
+    return this.watch(pathPattern)
   }
 
   createNetworkActivityStream () {
